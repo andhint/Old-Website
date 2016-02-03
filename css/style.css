@@ -1,0 +1,65 @@
+.background{
+	
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    opacity: 0.85;
+    width: 100%;
+    height: 31.250em;
+    padding-top: 1em;
+    margin-bottom: 1em
+
+}
+
+#home{
+	background-image: url("../img/Banner/1.jpg");
+}
+
+#photos{
+	background-image: url("../img/Banner/2.jpg");
+}
+
+#projects{
+	background-image: url("../img/Banner/3.jpg");
+}
+
+.background h1{
+	color: white;
+	line-height: 12em;
+	letter-spacing: .5em;
+	vertical-align: middle
+}
+
+.footer{
+	background-color: #333333;
+	padding: 20px;
+	margin-bottom: 0;
+}
+.profile{
+	display:block;
+    margin:auto;
+    border-radius: 150px;
+}
+
+.imgcenter{
+	display:block;
+    margin:auto;
+}
+
+.footer a{
+	color: #FFFFFF;
+	font-size: 0.8125rem;
+}
+
+a:hover{
+	color: grey;
+}
+/*
+body{
+	background-color: grey;
+}
+
+/*
+div{
+	border: 1px solid green;
+}
