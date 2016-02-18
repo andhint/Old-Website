@@ -1,0 +1,132 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hoobenstoogen</title>
+    <link rel="stylesheet" href="css/foundation.css" />
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="icon" href="img/favicon.ico" />
+
+    <script src="js/vendor/modernizr.js"></script>
+
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+    <script src="js/ChartNew.js"></script>
+    <script src="js/linearChart.js"></script>
+    <script src="js/logChart.js"></script>
+
+  </head>
+  <body>
+    
+    <!--TOP BAR-->
+    <div class="contain-to-grid sticky">
+      <nav class="top-bar" data-topbar>
+        <ul class="title-area">
+          <li class="name">
+            <h1><a href="index.html">Hoobenstoogen</a></h1>
+          </li>
+          <li class="toggle-topbar menu-icon">
+            <a href="#"><span></span></a>
+          </li>
+        </ul>
+        <section class="top-bar-section">
+          <ul class="right">
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="photos.html">Photos</a></li>
+          </ul>
+
+
+        </section>
+
+      </nav>
+
+    </div>
+    <!--END TOP BAR-->
+
+    <!--PICTURE-->
+    <div class="background text-center" id="projects">
+      <h1>INSTAGRAM AND NEW YEARS RESOLUTIONS</h1>
+    </div>
+    <!--END PICTURE-->
+
+    <div class="row">
+      <hr/>
+    </div>
+
+    <!--CONTENT-->
+
+    <div class="row">
+      <div class="large-12 columns">
+        <p>
+          At the beginning of this year I noticed a few of my friends were doing the 365 day challenge on Instagram. To partipate in the challenge you need to take a photo everyday and post it to instagram for 365 days (or 366 since 2016 is a leap year). I figured that, like most new years resolutions, the majority of people starting the challenge wouldn't make it to the end of the year. So I thought by looking at the number of times a certain day was tagged (i.e. #day42) I could find a trend. I had been wanting to learn how to use an API so this seemed like perfect chance. However, once I got into I realized Instagram's API wasn't very condusive to my project. I ended up making a Python script that used the <a href="http://www.crummy.com/software/BeautifulSoup/">Beautiful Soup library</a> to scrape the data from Instagram's website. The chart below shows the results.
+        </p> 
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="large-12 columns">
+        <canvas id="linearChart" width="960" height="500"></canvas>
+      </div>
+    </div> 
+
+    <div class="row">
+      <div class="large-12 columns">
+        <p>
+          I decided to do a little bit of research to see if this matched any existing theories or data. I had heard of the notion where it takes 30 days of doing an activity until it becomes a habit. Digging a little deeper, it turns out this number is <a href="http://jamesclear.com/new-habit">21 days and was observed by Dr. Maxwell Maltz</a>. Dr. Maltz saw this was the minimum number of days for a patient to become accustomed to their new selves (he was a plastic surgeon) after a surgery.       
+        </p> 
+        <p>
+          A <a href="http://onlinelibrary.wiley.com/doi/10.1002/ejsp.674/abstract">study</a> by Phillippa Lally at the University College London showed that the median time to reach 95% of asymptote was 66 days. But this could also range from 18 to 254 days. From reading the paper it seems to have be a good degree of variablity based on the person and what activity they were doing.
+        </p>
+        <p>
+          The data I got from Instagram seems to suggest their might be some validity to the "30 day rule". Right after day 30 the data seems to level of quite a bit. Below I have a logarithimic plot to show the data in some more detail.
+        </p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="large-12 columns">
+        <canvas id="logChart" width="960" height="500"></canvas>
+      </div>
+    </div> 
+
+    <div class="row">
+      <div class="large-12 columns">
+        <p>
+          The log plot shows the change at 30 days a little better. Also, a large drop after day 100 also becomes apparent. This was mostly due to some 100 day challenges I saw on Instagram such as 100happydays, 100daysofrealfood, etc. The drop is also exaggerated due to the logarithmic nature of the plot.                 
+        </p> 
+        <p>
+          Some other interesting things to look at are days 100, 200, and 300. Each one of these milestones had a slight bump in postings. Day 365 saw a large jump. I think this could be due to two reasons. First, some people would caption their posts as "This a picture of whatever on #day42 of #day365". This adds to the count of day 42 but also day 365. Secondly, maybe some people are just trying to fake like they did the whole challenge on the last day. But I tend to doubt that because it seems like it would be pretty easy to see through.
+        </p>
+        
+      </div>
+    </div>
+
+
+    <!--END CONTENT-->
+
+    <div class="row">
+      <hr/>
+    </div>
+    
+    <!--FOOTER-->
+    <div class="footer">    
+      <div class="row">
+        <ul class="inline-list right">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="photos.html">Photos</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!--END FOOTER-->
+    
+    <script src="js/foundation.min.js"></script>
+    
+    <script>
+      $(document).foundation();
+    </script>
+  </body>
+</html>
