@@ -46,6 +46,13 @@
     margin:auto;
 }
 
+.projimg{
+	display: block;
+	margin:auto;
+	height:400px;
+
+}
+
 .footer a{
 	color: #FFFFFF;
 	font-size: 0.8125rem;
