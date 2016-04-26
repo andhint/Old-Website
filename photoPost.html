@@ -1,0 +1,153 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hoobenstoogen</title>
+    <link rel="stylesheet" href="css/foundation.css" />
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="icon" href="img/favicon.ico" />
+    <script src="js/vendor/modernizr.js"></script>
+  </head>
+  <body>
+    
+    <!--TOP BAR-->
+    <div class="contain-to-grid sticky">
+      <nav class="top-bar" data-topbar>
+        <ul class="title-area">
+          <li class="name">
+            <h1><a href="index.html">Hoobenstoogen</a></h1>
+          </li>
+          <li class="toggle-topbar menu-icon">
+            <a href="#"><span></span></a>
+          </li>
+        </ul>
+        <section class="top-bar-section">
+          <ul class="right">
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="photos.html">Photos</a></li>
+          </ul>
+
+
+        </section>
+
+      </nav>
+
+    </div>
+    <!--END TOP BAR-->
+
+    <!--PICTURE-->
+    <div class="background text-center" id="projects">
+      <h1>PHOTO POST PROCESSING ESTIMATION</h1>
+    </div>
+    <!--END PICTURE-->
+
+    <div class="row">
+      <hr/>
+    </div>
+
+    <!--CONTENT-->
+    <div class="row">
+      <div class="large-12 columns">
+      <p>
+        Photography is a big passion of mine. One of the things I'm always curious about when seeing other photographer's pictures, is how they were edited. I've developed an eye for most things over the past year and half but I wanted to try making a more quantitative way for looking at it. So I decided to make a script that can read in an image and predict what techniques were used in post processing (editing).
+      </p>
+      <p>
+        To do this, I used python and library for image processing called <a href="http://opencv.org/">OpenCV.</a> For most of techniques I was searching for, I looked at histogram data and the derivative of the histogram data to identify unique features like peaks or data under a certain threshold value. Below I've listed the techniques I've found ways to predict. This is currently a work in progress so I'll be adding to it as I go.
+      </p>
+
+      <ul class="example-orbit" data-orbit>
+            <li>
+              <img src="img/PhotoPost/control.jpg" class="projimg" alt="slide 1" />
+              <div class="orbit-caption">
+                Control image with no post processing besides correcting exposure.
+              </div>
+            </li>
+            <li class="active">
+              <img src="img/PhotoPost/control_hist.png" class="projimg" alt="slide 2" />
+              <div class="orbit-caption">
+                Histogram plot of control image. Contains data for red, green, and blue channels as well as a summation of all 3 in black.
+              </div>
+            </li>
+            <li class="active">
+              <img src="img/PhotoPost/control_slope.png" class="projimg" alt="slide 2" />
+              <div class="orbit-caption">
+                Plot of histogram derivative (i.e. slope) for control image.
+              </div>
+            </li>
+      
+      </ul>
+
+      <h5>Detecting Lifted Blacks</h5>
+
+      <p>
+        Lifting the blacks is is produced by raising the farthest most point on the tone curve when editing. This causes the darkest pixels in the image to be lighter and none should have a pixel value of 0. I found that even though the tone curve should map all pixel values of 0 to something higher, there were still values pixels in that range. However, it did signifcantly reduce them so I was able check the first 20 pixel values to make sure they didn't exceed a certain threshold value. I choose this value to be the total number of pixels/(256*30). I picked this because it would be the 1/30th of the value if each pixel value had the same number of pixels in the image. I arrived on 1/30th through some trial and error.
+      </p>
+
+      <ul class="example-orbit" data-orbit>
+            <li>
+              <img src="img/PhotoPost/control.jpg" class="projimg" alt="slide 1" />
+              <div class="orbit-caption">
+                Control image.
+              </div>
+            </li>
+            <li class="active">
+              <img src="img/PhotoPost/lifted.jpg" class="projimg" alt="slide 2" />
+              <div class="orbit-caption">
+                Image with blacks lifted.
+              </div>
+            </li>
+            <li class="active">
+              <img src="img/PhotoPost/lifted_tone_curve.png" class="projimg" alt="slide 2" />
+              <div class="orbit-caption">
+                Tone curve used to edit image
+              </div>
+            </li>
+            <li class="active">
+              <img src="img/PhotoPost/control_hist.png" class="projimg" alt="slide 2" />
+              <div class="orbit-caption">
+                Plot of histogram for control image.
+              </div>
+            </li>
+            <li class="active">
+              <img src="img/PhotoPost/lifted_hist.png" class="projimg" alt="slide 2" />
+              <div class="orbit-caption">
+                Plot of histogram for image with lifted blacks.
+              </div>
+            </li>
+
+
+      </div>
+    </div>
+
+
+
+
+  
+    <!--END CONTENT-->
+
+    <div class="row">
+      <hr/>
+    </div>
+    
+    <!--FOOTER-->
+    <div class="footer">    
+      <div class="row">
+        <ul class="inline-list right">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="photos.html">Photos</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!--END FOOTER-->
+    
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+    </script>
+  </body>
+</html>
