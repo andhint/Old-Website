@@ -39,7 +39,7 @@
 
     <!--PICTURE-->
     <div class="background text-center" id="projects">
-      <h1>PHOTO POST PROCESSING ESTIMATION</h1>
+      <h1>PHOTO POST PROCESSING PREDICTION</h1>
     </div>
     <!--END PICTURE-->
 
@@ -82,7 +82,7 @@
       <h5>Detecting Lifted Blacks</h5>
 
       <p>
-        Lifting the blacks is is produced by raising the farthest most point on the tone curve when editing. This causes the darkest pixels in the image to be lighter and none should have a pixel value of 0. I found that even though the tone curve should map all pixel values of 0 to something higher, there were still values pixels in that range. However, it did signifcantly reduce them so I was able check the first 20 pixel values to make sure they didn't exceed a certain threshold value. I choose this value to be the total number of pixels/(256*30). I picked this because it would be the 1/30th of the value if each pixel value had the same number of pixels in the image. I arrived on 1/30th through some trial and error.
+        Lifting the blacks is is produced by raising the farthest most point on the tone curve when editing. This causes the darkest pixels in the image to be lighter and none should have a pixel value of 0. I found that even though the tone curve should map all pixel values of 0 to something higher, there were still values pixels in that range. However, it did signifcantly reduce them so I was able check the first 20 pixel values to make sure they didn't exceed a certain threshold value. I choose this value to be the total number of pixels/(256*30). I picked this because it would be the 1/30th of the value if each pixel value had the same number of pixels in the image. I arrived on 1/30th through some trial and error. I made sure to have this limit be a function of the number of pixels so it would scale for different sized images.
       </p>
 
       <ul class="example-orbit" data-orbit>
@@ -116,6 +116,146 @@
                 Plot of histogram for image with lifted blacks.
               </div>
             </li>
+      </ul>
+
+      <h5>Detecting Crushed Blacks</h5>
+
+      <p>
+        Crushing the blacks in an image is done by flattening a portion of the tone curve on the left side. This is somewhat similar to lifting the blacks in that a range of black pixels will be slighlty brighter. However, all of the pixels will be the same shade of black due to the portion. To detect this I looked for a spike in the derivative data in the first half of the pixel values (to make sure the spike was happening in the black section of pixel values). I omitted the first few pixel values as well because I found some images have spikes in the first few values even if not edited to have crushed blacks. This is usually do to minor clipping in the image. To detect the spike I checked to see if any of the pixel values I was looking at exceeded (11 * average slope). Like before I arrived at 11 through some trial and error.
+      </p>
+
+      <ul class="example-orbit" data-orbit>
+            <li>
+              <img src="img/PhotoPost/control.jpg" class="projimg" alt="slide 1" />
+              <div class="orbit-caption">
+                Control image.
+              </div>
+            </li>
+            <li class="active">
+              <img src="img/PhotoPost/crushed.jpg" class="projimg" alt="slide 2" />
+              <div class="orbit-caption">
+                Image with blacks crushed.
+              </div>
+            </li>
+            <li class="active">
+              <img src="img/PhotoPost/crushed_tone_curve.png" class="projimg" alt="slide 2" />
+              <div class="orbit-caption">
+                Tone curve used to edit image
+              </div>
+            </li>
+            <li class="active">
+              <img src="img/PhotoPost/control_hist.png" class="projimg" alt="slide 2" />
+              <div class="orbit-caption">
+                Plot of histogram for control image.
+              </div>
+            </li>
+            <li class="active">
+              <img src="img/PhotoPost/crushed_hist.png" class="projimg" alt="slide 2" />
+              <div class="orbit-caption">
+                Plot of histogram for image with crushed blacks.
+              </div>
+            </li>
+            <li class="active">
+              <img src="img/PhotoPost/control_slope.png" class="projimg" alt="slide 2" />
+              <div class="orbit-caption">
+                Plot of the derivative of histogram for control image.
+              </div>
+            </li>
+            <li class="active">
+              <img src="img/PhotoPost/crushed_slope.png" class="projimg" alt="slide 2" />
+              <div class="orbit-caption">
+                Plot of the derivative of histogram for image with crushed blacks.
+              </div>
+            </li>
+      </ul>
+
+      <h5>Detecting Crushed and Lifted Blacks</h5>
+
+      <p>
+        I didn't have a seperate function to detect if the blacks were both crushed and lifted but I thought it was worth mentioning and explaining. Crushed and lifted blacks are created simply by creating tone curve that contains the flat portion and is lifted up on the left side. Most of the trial and error I mentioned earlier was from adjusting my methods and constants in my functions so that I could accurately detect when both effects were occuring or just one or the other.
+      </p>
+
+      <ul class="example-orbit" data-orbit>
+            <li>
+              <img src="img/PhotoPost/control.jpg" class="projimg" alt="slide 1" />
+              <div class="orbit-caption">
+                Control image.
+              </div>
+            </li>
+            <li class="active">
+              <img src="img/PhotoPost/crushed.jpg" class="projimg" alt="slide 2" />
+              <div class="orbit-caption">
+                Image with blacks crushed.
+              </div>
+            </li>
+            <li class="active">
+              <img src="img/PhotoPost/lifted.jpg" class="projimg" alt="slide 2" />
+              <div class="orbit-caption">
+                Image with blacks lifted.
+              </div>
+            </li>
+            <li class="active">
+              <img src="img/PhotoPost/crushed_lifted.jpg" class="projimg" alt="slide 2" />
+              <div class="orbit-caption">
+                Image with blacks crushed and lifted.
+              </div>
+            </li>
+            <li class="active">
+              <img src="img/PhotoPost/lifted_crushed_tone_curve.png" class="projimg" alt="slide 2" />
+              <div class="orbit-caption">
+                Tone curve for crushed and lifted blacks.
+              </div>
+            </li>
+ 
+      </ul>
+
+      <h5>Detecting Clipping</h5>
+
+      <p>
+        Next I wanted to check the image for clipping. Clipping is when the exposure of the image results in a large number of pure white (pixel value of 255) or pure black pixels (pixel value of 0) in the image. Now technically it's normal for there to be some very slight clipping in most images if you're really paying attention to the histogram. I wanted to find if there was significant and intended clipping in the image. To do this I checked the first and last 10 pixels values to see if the total number exceeded a limit. I set this limit be (the total number of pixels / 256) * 5. Basically, 5 times the average value if every pixel value had the some number of pixels. Clipping isn't created by modifying the tone curve but by changing the exposure so I haven't included a picture of the tone curve below.
+      </p>
+
+      <ul class="example-orbit" data-orbit>
+            <li>
+              <img src="img/PhotoPost/test.jpg" class="projimg" alt="slide 1" />
+              <div class="orbit-caption">
+                Control image.
+              </div>
+            </li>
+            <li class="active">
+              <img src="img/PhotoPost/clipped_blacks.jpg" class="projimg" alt="slide 2" />
+              <div class="orbit-caption">
+                Image with clipped blacks.
+              </div>
+            </li>
+            <li class="active">
+              <img src="img/PhotoPost/clipped_whites.jpg" class="projimg" alt="slide 2" />
+              <div class="orbit-caption">
+                Image with clipped whites.
+              </div>
+            </li>
+            <li class="active">
+              <img src="img/PhotoPost/test_hist.png" class="projimg" alt="slide 2" />
+              <div class="orbit-caption">
+                Histogram of control image.
+              </div>
+            </li>
+            <li class="active">
+              <img src="img/PhotoPost/clipped_blacks_hist.png" class="projimg" alt="slide 2" />
+              <div class="orbit-caption">
+                Histogram of image with clipped blacks.
+              </div>
+            </li>
+            <li class="active">
+              <img src="img/PhotoPost/clipped_whites_hist.png" class="projimg" alt="slide 2" />
+              <div class="orbit-caption">
+                Histogram of image with clipped whites.
+              </div>
+            </li>
+ 
+      </ul>
+
+
 
 
       </div>
