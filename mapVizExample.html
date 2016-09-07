@@ -24,7 +24,7 @@
         var map = L.map('map');
         // Read the GeoJSON data with jQuery, and create a circleMarker element for each tweet
         // Each tweet will be represented by a nice red dot
-        $.getJSON("geo_data.json", function(data) {
+        $.getJSON("./geo_data.json", function(data) {
             var myStyle = {
                 radius: 2,
                 fillColor: "red",
@@ -42,7 +42,7 @@
             geojson.addTo(map)
         });
         // Add the tiles to the map, and initialise the view in the middle of Europe
-        map.addLayer(mytiles).setView([50.5, 5.0], 6);
+        map.addLayer(mytiles).setView([40, -100], 4);
 
     </script>
     </body>
